@@ -15,6 +15,23 @@ git config --global user.email {깃허브 이메일}
 <b>Master branch에서 main branch로 변경된 이유</b><br/>
 인종차별적 요소나 주종 관계를 담고 있는 용어를 프로젝트에서 제거하기로 결정하면서 업계 전반에 이런 부분을 제거하는 움직임이 일어남
 
+### <b>JavaScript</b>
+
+#### var let const
+
+<b>var</b> 중복 선언 가능<br/>
+<b>let</b> 중복 선언 불가능<br/>
+<b>const</b> 중복 선언 불가능<br/>
+const는 상수
+주로 let, const만 사용
+
+### <b>연산자</b>
+
+a++(postifix방식), ++a(prefix방식))
+let a = 1, let b = '1'
+console.log(a == b) => true
+console.log(a === b) => false
+
 ### <b>컴포넌트의 종류</b>
 
 #### <b>클래스형 컴포넌트</b>
