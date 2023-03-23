@@ -23,10 +23,8 @@ const element = <a href="https://www.reactjs.org"> link </a>;
 const element = <img src={user.avatarUrl}></img>;
 ```
 #### 컴포넌트 선언 방법
-1. .jsx 혹은 .js파일로 컴포넌트파일을 생성
-```javascript
+1. .jsx 혹은 .js파일로 컴포넌트파일을 생성 (파일 생성시 이름 앞에 대문자로 시작)
 
-```
 2. 해당 파일에서 React import 
 ```javascript
 import React from "react";
