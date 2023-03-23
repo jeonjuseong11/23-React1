@@ -10,3 +10,5 @@ function Library(props){
     </div>
   )
 }
+
+export default Library;
