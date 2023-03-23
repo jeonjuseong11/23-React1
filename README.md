@@ -2,6 +2,48 @@
 ## React1 강의 정리 Repository
 #### 강의 정리
 ## **4주차 (2023.03.23)**
+### **JSX (JavaScript Extension)**
+Javascript에 XML을 추가한 확장 문법
+#### JSX의 장점
+- 코드가 간결해짐 
+- 가독성이 향상됨
+- Injection Attack이라 불리는 해킹 방법을 방어함으로써 보안에 강함
+
+#### 사용법
+모든 자바스크립트 문법을 지원
+자바스크립트 문법에 XML과 HTML을 섞어서 사용
+
+#### JSX 속성 정의
+1. 어트리뷰트에 따옴표를 이용해 문자열 리터럴을 정의
+``` javascript
+const element = <a href="https://www.reactjs.org"> link </a>;
+```
+2. 중괄호를 사용하여 어트리뷰트에 JavaScript 표현식을 삽입
+``` javascript
+const element = <img src={user.avatarUrl}></img>;
+```
+#### 컴포넌트 선언 방법
+1. .jsx 혹은 .js파일로 컴포넌트파일을 생성 (파일 생성시 이름 앞에 대문자로 시작)
+
+2. 해당 파일에서 React import 
+```javascript
+import React from "react";
+```
+3. export
+```javascript
+export default 컴포넌트 파일 이름;
+```
+4. 컴포넌트 활용될 곳에서 import 받아 사용
+```javascript
+import Library from './chapter_3/Library';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Library />
+  </React.StrictMode>
+);
+
+```
 ## **3주차 (2023.03.16)**
 ### **Node.js 설치**
 1. 구글에 node 검색 후 https://nodejs.org 에 들어가 LTS버전 설치
