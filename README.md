@@ -1,6 +1,200 @@
 # 201930232 전주성 23-React1 
 ## React1 강의 정리 Repository
 #### 강의 정리
+## **6주차 (2023.04.06)** 
+### **댓글 컴포넌트 만들기**  
+/src/chapter_05 디렉토리 생성
+#### **Comment 컴포넌트 생성**  
+Comment.jsx  
+```js
+const Comment = (props) => {
+  
+  return (
+      <div>
+        <h1> 제가 만든 첫 컴포넌트입니다.</h1>
+      </div>
+  );
+};
+
+export default Comment;
+
+```
+#### **CommentList 컴포넌트 생성**  
+CommentList.js   
+```js
+import React from 'react';
+import Comment from './Comment';
+
+const CommentList = (props) => {
+  return (
+    <div>
+      <Comment />
+    </div>
+  );
+};
+
+export default CommentList;
+
+```
+#### **CommentList 컴포넌트 렌더링**  
+index.js    
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import CommentList from './chapter_05/CommentList';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <CommentList />
+  </React.StrictMode>
+);
+
+```
+#### **CommentList를 이용하여 Comment에 props 전달**
+name과 comment라는 props를 Comment 컴포넌트에 전달   
+CommentList.js  
+```js
+import React from 'react';
+import Comment from './Comment';
+
+const CommentList = (props) => {
+  return (
+    <div>
+      <Comment name={"전주성"} comment={"안녕하세요 전주성입니다."}/>
+      <Comment name={"전주성"} comment={"안녕하세요 전주성입니다."}/>
+      <Comment name={"전주성"} comment={"안녕하세요 전주성입니다."}/>
+    </div>
+  );
+};
+
+export default CommentList;
+```
+Comment 컴포넌트 내부에서 props.name,props.comment로 값을 받음  
+Comment.jsx  
+```js
+import React from 'react';
+import styles from './CommentStyle.js';
+
+const Comment = (props) => {
+  
+  return (
+    <div style={styles.wrapper}>
+      <div style={styles.imageContainer}>
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
+          alt='프로필 이미지'
+          style={styles.image}
+          />
+      </div>
+      <div style={styles.contentContainer}>
+        <span style={styles.nameText}>{props.name}</span>
+        <span style={styles.commentText}>{props.comment}</span>
+      </div>
+    </div>
+  );
+};
+
+export default Comment;
+```
+#### **Map 함수 활용**
+위에는 매번 컴포넌트를 수정해야하기 때문에 나쁜 예시   
+별도의 객체로 받아 컴포넌트에서 분리하여 출력하도록 해야함  
+comments객체 즉 받는 데이터를 분리해줌  
+데이터를 추가해도 자동으로 렌더링이 추가 되도록함  
+
+CommentList.js
+```js
+import React from 'react';
+import Comment from './Comment';
+const comments=[
+  {
+      name:"전주성",
+      comment:"안녕하세요 전주성입니다."
+  },
+  {
+      name:"전주성2",
+      comment:"안녕하세요 전주성2입니다."
+  },
+  {
+      name:"전주성2",
+      comment:"안녕하세요 전주성2입니다."
+  },
+]
+const CommentList = () => {
+  return (
+    <div>
+      {comments.map((v)=>{
+        return(
+          <Comment name={v.name} comment={v.comment}/>
+        )
+      })}
+    </div>
+  );
+};
+
+export default CommentList;
+```
+### **State와 생명주기**  
+#### **State**  
+React 컴포넌트의 상태  
+정상/비정상이 아닌 컴포넌트의 데이터를 의미  
+정확히는 컴포넌트의 변경 가능한 데이터를 의미  
+state가 변하면 다시 렌더링되기 때문에 렌더링에 관련된 값만 state에 포함해야함  
+#### **State 특징**  
+**클래스형 컴포넌트**
+constructor는 생성자  
+this.state가 컴포넌트의 state   
+ex)
+```js
+class ListButton extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={
+			liked:false
+		};
+	}
+	…
+}
+
+```
+**함수형 컴포넌트**  
+useState() 함수를 사용 
+
+**state 변경**   
+state는 직접 수정은 불가능  
+setState 함수를 이용해야함  
+```js
+//잘못된 방법
+this.state={
+  name:”juseong”
+}
+//정상적인 방법
+this.setState({
+	name:”juseong”
+});
+```  
+  
+#### **component vs element vs instance**  
+element = 재료  
+component = 행동  
+instnace = 재료를 빵 틀에 넣고 만든 빵  
+
+
+#### **생명주기**  
+컴포넌트의 생성, 사용, 종료 시점을 나타냄  
+클래스형에서 constructor가 실행되면 컴포넌트 생성  
+생성 후 componentDidMount()함수가 호출  
+컴포넌트가 소멸하기 전까지 여러 번 렌더링됨  
+렌더링은 props.setState(), forceUpdate()에 의해 상태가 변경되면 이루어짐  
+렌더링이 끝나면 componentDidUpdate()함수 호출됨  
+마지막으로 컴포넌트가 Unmount되면 componentWillUnmount()함수가 호출됨  
+
+### **React Developer Tools**
+chrome 확장 프로그램으로 설치 후 개발자 도구(F11)에 들어가보면    
+언제 어떻게 컴포넌트가 움직이는지 볼 수 있는 component 메뉴  
+Profilter 탭이 나오는 것을 볼 수 있다  
+
 ## **5주차 (2023.03.30)**  
 ### **엘리먼트**  
 #### **엘리먼트의 정의**  
@@ -84,7 +278,8 @@ ReactDOM.render(
 #### **컴포넌트 추출**
 복잡한 컴포넌트를 쪼개서 여러 개의 컴포넌트로 나눌 수 있음  
 큰 컴포넌트에서 일부를 추출해서 새로운 컴포넌트를 만드는 것  
-1개의 컴포넌트에 하나의 기능만 사용하도록 설계하는 것이 좋음  
+1개의 컴포넌트에 하나의 기능만 사용하도록 설계하는 것이 좋음   
+가독성이 높아짐 
 
 
 #### **자바스크립트 함수와의 차이점**
