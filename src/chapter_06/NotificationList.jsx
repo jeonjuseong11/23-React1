@@ -26,16 +26,16 @@ class NotificationList extends React.Component{
   }
   componentDidMount(){
     const {notifications}=this.state;
-    timer=setInterval(()=>{
+    timer = setInterval(()=>{
       if(notifications.length < reservedNotifications.length){
         const index = notifications.length;
         notifications.push(reservedNotifications[index]);
         this.setState({
-          notificaitons:notifications
+          notifications: notifications
         })
       }else{
         this.setState({
-          notificaitons:[],
+          notifications:[],
         });
         clearInterval(timer);
       }
