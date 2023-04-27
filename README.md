@@ -1,6 +1,212 @@
 # 201930232 전주성 23-React1 
 ## React1 강의 정리 Repository
 #### 강의 정리
+## **9주차 (2023.04.27)**
+### **이벤트 핸들링**  
+#### **DOM에서 click 이벤트 처리**
+이벤트 이름을 모두 소문자로 표기  
+이벤트를 처리 할 함수를 문자열로 전달  
+```js
+<button onclick=”activate()”>activate</button>  
+```
+#### **REACT에서 click 이벤트 처리**
+이벤트의 이름을 카멜 표기법으로 표기  
+이벤트를 처리할 함수를 그대로 전달  
+```js
+<button onClick={activate}>activate</button>
+```
+
+### **이벤트 추가하기**
+버튼을 클릭하면 이벤트 핸들러 함수인 handleClick() 함수를 호출  
+Bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되어 undefined로 사용불가  
+Bind를 사용하지 않으려면 화살표 함수를 사용하는 방법도 있음  
+클래스 컴포넌트는 이제 거의 사용하지 않기 때문에 참고만 할 것  
+
+### **이벤트 핸들러**
+이벤트가 발생했을 떄 해당 이벤트를 처리하는 함수  
+이벤트 리스너라고 부르기도 함  
+- 클래스 컴포넌트
+  * 쿨래스의 함수로 정의하고 생성자에서 바인딩해서 사용
+  * 클래스 필드 문법도 사용 가능
+- 함수형 컴포넌트
+  * 함수 안에 함수로 정의
+  * arrow function을 사용해서 정의
+  ```js
+  //첫번째 방법
+  const handleClick(){
+    setIsToggleOn((isToggleOn)=>!isToggleOn);
+  }
+  //두번째 방법
+  const handleCLick=()=>{
+    setIsToggleOn((isToggleOn)=>!isToggleOn
+  }
+  <button onClick={handleClick}>
+  ...
+  ```
+### **Arguments**
+함수에 전달할 데이터 
+파라미터 또는 매개변수라고 부름  
+#### **Arguments 전달**
+
+- 클래스 컴포넌트
+  * arrow function을 사용하거나 Function.prototype.bind를 사용해서 전달
+- 함수 컴포넌트
+  * 이벤트 랜들러 호출 시 원하는 순서대로 매개변수를 넣어 사용  
+
+```js
+<button onClick={(event)=>this.deleteItem(id,event)}>삭제하기</button>
+<button onClick={this.deleteItem(this, id)}>삭제하기</button>
+```
+이벤트 핸들러에 매개 변수를 전달해야 하는 경우도 많음  
+event라는 매개변수는 리액트의 이벤트 객체를 의미    
+
+
+#### **클릭 이벤트 처리하기 실습**
+```js
+import React,{useState} from "react";
+function ConfirmButton(props) {
+    const [isConfirmed,setIsConfirmed]=useState(false);
+
+    const handleConfirm=()=>{
+      setIsConfirmed((prevIsConfirmed)=>!prevIsConfirmed);
+    }
+    return(
+      <button onClick={handleConfirm} disabled={isConfirmed}>
+        {isConfirmed ? "확인됨" : "확인하기"}
+      </button>
+    )
+}
+export default ConfirmButton;
+
+```
+
+### **조건부 렌더링**
+props를 전달받아 참이면 괄호안에 것을 수행하고 거짓이면 밖에 것을 리턴함
+```js
+function Greeting(props){
+    const isLoggedIn = props.isLoggedIn;
+    if(isLoggedIn) {
+        return <UserGreeting />;
+    }
+    return <GuestGreeting />;
+}
+```
+### **엘리먼트 변수**
+렌더링해야 될 컴포넌트를 변수처럼 사용하는 방법
+```js
+  <div>
+    {button}
+  </div>
+```
+### **인라인 조건**
+필요한 곳에 조건문을 직접 넣어 사용하는 방법  
+1. 인라인 if  
+  if문을 직접 사용하지 않고 동일한 효과를 내기 위해 && 논리 연산자 사용
+  &&는 모든 조건이 참일 때만 참  
+
+      **단축평가**  
+      첫 번째 조건이 거짓이면 두번째 조건은 판단할 필요 없음  
+
+      **AND**
+      |A|B|RESULT|
+      |---|---|-----|
+      |T|T|T|
+      |T|F|F|
+      |F|T|F|
+      |F|F|F|
+
+      **OR**
+      |A|B|RESULT|
+      |---|---|-----|
+      |T|T|T|
+      |T|F|T|
+      |F|T|T|
+      |F|F|F|
+
+2. 인라인 if-else  
+삼항 연산자를 사용  
+    ```
+    조건문 ? 참일경우 : 거짓을 경우
+    ```
+   문자열이나 엘리먼트를 넣을 수 있음  
+   
+### **컴포넌트 렌더링 막기**
+컴포넌트를 렌더링하고 싶지 않을 때에는 null을 리턴함  
+```js
+  function WarningBanner(props){
+      if(!props.warning){
+        return null;
+      }
+      return (
+        <div>경고!</div>
+      )
+  }
+```
+### **로그인 여부 툴바 실습**
+LandingPage.js
+```js 
+import React, { useState } from 'react';
+import ToolBar  from './ToolBar';
+const LandingPage = () => {
+  const [isLoggedIn,setIsLoggedIn]=useState(false);
+
+  const onClickLogin=()=>{
+    setIsLoggedIn(true);
+  }
+  const onClickLogout=()=>{
+    setIsLoggedIn(false);
+  }
+  return (
+    <div>
+      <ToolBar
+        isLoggedIn={isLoggedIn}
+        onCLickLogin={onClickLogin}
+        onClickLogout={onClickLogout}
+      />
+    </div>
+  );
+};
+
+export default LandingPage;
+```
+ToolBar.js
+```js
+import React from 'react';
+
+const styles = {
+  wrapper:{
+    padding : 16,
+    display : "flex",
+    flexDirection : "row",
+    borderBottom : "1px solid gray"
+  },
+  greeting: {
+    marginRight : 8
+  }
+}
+
+const ToolBar = (props) => {
+  const {isLoggedIn,onCLickLogin,onClickLogout}=props;
+
+
+  return (
+    <div style={styles.wrapper}>
+      {isLoggedIn && <span style={styles.greeting}>환영합니다!</span>}
+      {isLoggedIn ? 
+        <button onClick={onClickLogout}>로그아웃</button>
+       : 
+        <button onClick={onCLickLogin}>로그인</button>}
+    </div>
+  );
+};
+
+export default ToolBar;
+```
+### **리스트**  
+컴퓨터 프로그래밍에서는 같은 아이템을 순서대로 모아놓은 것이 리스트에 해당됨  
+**배열**  
+자바스크립트의 변수나 객체를 하나의 변수로 묶어놓은 것  
+
 ## **7주차 (2023.04.13)**
 ### **훅(Hook)**  
 ### **훅이란**
