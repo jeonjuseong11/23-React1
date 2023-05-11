@@ -1,6 +1,102 @@
 # 201930232 전주성 23-React1 
 ## React1 강의 정리 Repository
 #### 강의 정리
+## **11주차 (2023.05.11)**
+### **섭씨 화씨 온도 변환기 만들기 실습**  
+TemperatureInput.jsx 
+```js
+import React from 'react';
+
+const scaleName = {
+  c: "섭씨",
+  f: "화씨",
+};
+
+function TemperatureInput(props){
+  const handleChange = (e) => {
+    props.onTemperatureChange(e.target.value);
+  };
+
+  return(
+    <fieldset>
+      <legend>
+        온도를 입력해주세요 (단위: {scaleName[props.scale]});
+      </legend>
+      <input value={props.temperature} onChange={handleChange}/>
+    </fieldset>
+  )
+}
+
+export default TemperatureInput;
+``` 
+Calculator.jsx 
+```js
+import React,{ useState } from 'react';
+import TemperatureInput from "./TemperatureInput";
+
+function BoilingVerdict(props) {
+  if (props.celsius >= 100) {
+      return <p>물이 끓습니다.</p>;
+  }
+  return <p>물이 끓지 않습니다.</p>;
+}
+
+function toCelsius(fahrenheit) {
+  return ((fahrenheit - 32) * 5) / 9;
+}
+
+function toFahrenheit(celsius) {
+  return (celsius * 9) / 5 + 32;
+}
+
+function tryConvert(temperature, convert) {
+  const input = parseFloat(temperature);
+  if (Number.isNaN(input)) {
+      return "";
+  }
+  const output = convert(input);
+  const rounded = Math.round(output * 1000) / 1000;
+  return rounded.toString();
+}
+
+function Calculator(props) {
+  const [temperature, setTemperature] = useState("");
+  const [scale, setScale] = useState("c");
+
+  const handleCelsiusChange = (temperature) => {
+      setTemperature(temperature);
+      setScale("c");
+  };
+
+  const handleFahrenheitChange = (temperature) => {
+      setTemperature(temperature);
+      setScale("f");
+  };
+
+  const celsius =
+      scale === "f" ? tryConvert(temperature, toCelsius) : temperature;
+  const fahrenheit =
+      scale === "c" ? tryConvert(temperature, toFahrenheit) : temperature;
+
+  return (
+      <div>
+          <TemperatureInput
+              scale="c"
+              temperature={celsius}
+              onTemperatureChange={handleCelsiusChange}
+          />
+          <TemperatureInput
+              scale="f"
+              temperature={fahrenheit}
+              onTemperatureChange={handleFahrenheitChange}
+          />
+          <BoilingVerdict celsius={parseFloat(celsius)} />
+      </div>
+  );
+}
+
+export default Calculator;
+```
 ## **10주차 (2023.05.04)**
 ### **리스트**  
 자바스크립트의 변수나 객체를 하나의 변수로 묶어 놓은 배열과 같은 것  
