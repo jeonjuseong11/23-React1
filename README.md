@@ -4,6 +4,173 @@
 
 #### 강의 정리
 
+## **13주차 (2023.05.25)**
+
+12주차에 이어서 컨텍스트 내용 진행  
+**여러 개의 컨텍스트 사용하기**  
+Providre 컴포넌트와 Consumer 컴포넌트를 여러 개 중첩해서 사용하면 됨
+
+### **useContext()**
+
+함수 컴포넌트에서 컨텍스트를 쉽게 사용할 수 있게 해주는 훅  
+React.createContext()함수 호출로 생성된 컨텍스트 객체를 인자로 받아서 현재 컨텍스트의 값을 리턴  
+컨택스트의 값이 변경되면 변경된 값과 함께 useContext()훅을 사용하는 컴포넌트가 재렌더링됨
+
+사용법
+
+```js
+  function MyComponent(props){
+    const value = useContext(MyContent);//올바른 사용법
+                = useContext(MyContext.Consumer);//잘못된 사용법
+                = useContext(MyContext.Provider);//잘못된 사용법
+
+    return(
+      ...
+    )
+
+  }
+```
+
+### **CSS**
+
+Cascading Style Sheets  
+하나의 스타일이 여러 개의 엘리먼트에 적용될 수 있고 하나으 엘리먼트에도 여러 개의 스타일이 적용될 수 있음
+
+### **선택자**
+
+스타일을 어떤 엘리먼트에 적용할지 선택하게 해주는 것
+
+### **선택자의 종류**
+
+**id 선택자**  
+엘리먼트의 id속성으로 엘리먼트를 선택  
+#뒤에 아이디를 넣어 사용
+
+```
+스타일을 적용할 때 id값을 쓰지 않는다
+주로 JS에서 id값을 사용하기 때문
+실무에선 class를 주로 사용함
+```
+
+**클래스 선택자**  
+엘리먼트의 클래스 속성으로 엘리먼트를선택  
+점뒤에 클래스명을 넣어서 사용  
+**전체 선택자**
+전체 엘리먼트에 적용하기 위한 선택자
+**그룹 선택자**  
+여러가지 선택자를 구룹으로 묶어서 하나의 스타일을 적용하기 위해 사용하는 선택자
+
+```
+전체 선택자와 그룹 선택자는 주로 초기화할 떄 사용함
+```
+
+**엘리먼트의 상태와 관련된 선택자**  
+엘리먼트의 다양한 상태에 따라 스타일을 적용하기 위한 선택자
+
+```
+:hover - 마우스가 엘리먼드 위에 올라왔을 때
+:active - 엘리먼트가 활성화 되어있을 때
+:focus - 엘리먼트가 초점을 갖고 있을 경우
+:checked - radio button 이나 checkbox같은 유형의 input태그가 체크되어 있는 경우
+:first-child - 상위 엘리먼트 기준 첫 번째 child
+:last-child - 상위 엘리먼트 기준 마지막 child
+```
+
+**레이아웃과 관련된 속성**  
+화면에 엘리먼트들을 어떻게 배치할 것인지를 의미
+
+**display**
+
+```
+display: none;   - 엘리먼트를 화면에서 숨기기 위해 사용
+display: block;  - 블럭 단위로 엘리먼트를 배치하는 것
+                 - 엘리먼트가 새로운 줄에서 시작하여 위치한 곳 전체의 width를 차지
+display: inline; - 엘리먼트를 라인 안에 넣는 것
+                 - 모든 width,height과 관련된속성들은 효과가 없어짐
+display: flex;   - 엘리먼트를 블록 레벨의 플렉스 컨테이너로 표시하는 것
+```
+
+**visibility**
+
+```
+visibility: visible; - 화면에 보이게 함
+visibility: hidden   - 화면에서 안 보이게 감추는 것
+```
+
+**position**
+
+```
+static - 기본값으로 엘리먼트를 원래의 순서대로 위치
+fixed  - 엘리먼트를 브라우저 window에 상대적으로 위치
+relative - 다르게 다른 엘리먼트를 기준 상대적으로 위치
+absolute - 엘리먼트를 절대 위치에 위치시킴
+         - 기준은 첫 번째 상위 엘리먼트
+```
+
+**width**
+
+```
+min-width - 최소 너비
+max-width - 최대 너비
+```
+
+**height**
+
+```
+max-height - 최대 높이
+min-height - 최소 높이
+```
+
+### **플렉스박스**
+
+**flex-direction**
+
+```
+row - 행을 따라 가로 순서대로 왼쪽부터 배치
+column - 열을 따라 세로 순서대로 위쪽부터 배치
+row-reverse - 행의 역방향으로 오른쪽부터 배치
+column-reverse - 열의 역방향으로 아래쪽부터 배치
+```
+
+**align-items**
+
+```
+strentch - 아이템을 늘려서 컨테이너를 가득 채움
+flex-start - cross acis의 시작 지점으로 아이템을 정렬
+center - cross axis의 중앙으로 아이템을 정렬
+flex-end - cross axis의 끝 지점으로 아이템을 정렬
+baseline - 아이템을 baseline 기준으로 정렬
+```
+
+**justify-content**
+
+```
+flex-start - main axis의 시작 지점으로 아이템을 맞춤
+center - main axis의 중앙으로 아이템을 맞춤
+flex-end - main axis의 끝 지점으로 아이템을 맞춤
+space-between - main axis를 기준으로 첫 아이템은 시작 지점에 맞추고 마지막 아이템은 끝 지점에 맟추며 중간에 있는 아이템들 사이의 간격을 일정하게 되도록 맞춤
+space-around - main axis를 기준으로 각 아이템의 주변 간격(아이템의 시작과 끝)을 동일하게 맞춤
+```
+
+### **폰트와 관련된 속성**
+
+**font-family**  
+어떤 글꼴을 사용할 것인지를 결정하는 속성  
+지정한 글꼴을 찾지 못했을 경우를 대비해서 사용할 글꼴을 순서대로 지정해 줘야 함
+
+```
+협의가 되지 않은 글꼴을 마음대로 사용하면 안된다
+개발자 마다 갖고있는 글꼴이 다를 수 있기 때문에 기본적인 글꼴로 지정해야함
+```
+
+**font-style**
+
+```
+normal - 일반적인 글자의 형태를 의미
+italix - 글자가 기울어진 형태로 나타남
+oblique - 글자가 비스듬한 형대로 나타남
+```
+
 ## **12주차 (2023.05.18)**
 
 ### **합성(Composition)**
