@@ -4,6 +4,44 @@
 
 #### 강의 정리
 
+## **14주차 (2023.06.01)**
+
+### **styled-components**
+
+CSS 문법을 그대로 사용하면서 결과물을 스타일링된 컴포넌트 형태로 만들어주는 오픈 소스 라이브러리  
+**설치방법**
+
+```
+#npm을사용하는 경우
+npm install --save styled-components
+#yarn을 사용하는 경우
+yarn add styled-components
+```
+
+### **Production 빌드하기**
+
+빌드 명령어
+
+```
+npm run build
+```
+
+서빙
+
+```
+serve -s build
+```
+
+serve 명령어가 없을경우
+
+```
+serve install -g serve
+```
+
+### **styled-components의 props 사용하기**
+
+styled-components에서 조건이나 동적으로 변하는 값을 사용해서 스타일링 할 수 있다.
+
 ## **13주차 (2023.05.25)**
 
 12주차에 이어서 컨텍스트 내용 진행  
