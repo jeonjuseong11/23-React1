@@ -1,8 +1,6 @@
 # 201930232 전주성 23-React1
 
-## React1 강의 정리 Repository
-
-#### 강의 정리
+## React1 정리 Repository
 
 ## **14주차 (2023.06.01)**
 
